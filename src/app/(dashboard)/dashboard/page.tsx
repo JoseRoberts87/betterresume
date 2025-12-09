@@ -23,6 +23,12 @@ export default async function DashboardPage() {
             <span className="text-sm text-zinc-600 dark:text-zinc-400">
               {user.email}
             </span>
+            <Link
+              href="/dashboard/settings"
+              className="text-sm text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+            >
+              Settings
+            </Link>
             <form action="/auth/signout" method="post">
               <button
                 type="submit"
