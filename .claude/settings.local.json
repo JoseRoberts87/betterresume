@@ -3,7 +3,9 @@
     "allow": [
       "Bash(npm run build:*)",
       "Bash(npm install:*)",
-      "Bash(npx prisma init:*)"
+      "Bash(npx prisma init:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(npx prisma generate:*)"
     ],
     "deny": [],
     "ask": []
