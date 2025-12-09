@@ -36,6 +36,7 @@ export interface WorkExperience {
   endDate?: string;
   summary?: string;
   highlights?: string[];
+  location?: string;
   // Extended fields
   skillsUsed?: string[];
   toolsUsed?: string[];
@@ -50,6 +51,7 @@ export interface Education {
   startDate?: string;
   endDate?: string;
   score?: string;
+  gpa?: string;
   courses?: string[];
 }
 
