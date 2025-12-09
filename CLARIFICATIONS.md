@@ -37,4 +37,21 @@
 
 ---
 
+## Tech Stack
+
+| Layer | Choice |
+|-------|--------|
+| Frontend | Next.js |
+| Backend | Next.js (API routes) |
+| Database ORM | Prisma |
+| Database | PostgreSQL with pgvector |
+| Authentication | Supabase Auth |
+| File Storage | Supabase Storage |
+| Deployment | Vercel (for now) |
+| Rich Text Editor | Lexical |
+| PDF Generation | react-pdf or pdfmake |
+| LLM | Ollama (local) |
+
+---
+
 All questions resolved.
