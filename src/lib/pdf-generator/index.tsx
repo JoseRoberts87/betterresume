@@ -1,13 +1,16 @@
 import { pdf } from "@react-pdf/renderer";
 import { USTechResume } from "@/lib/resume-templates/us-tech";
+import { EUUKResume } from "@/lib/resume-templates/eu-uk";
+import { GermanyResume } from "@/lib/resume-templates/germany";
+import { CreativeResume } from "@/lib/resume-templates/creative";
 import type { CareerData } from "@/types/json-resume";
 import type { TemplateId } from "@/lib/resume-templates";
-import React from "react";
 
 export interface PDFGenerationOptions {
   template: TemplateId;
   careerData: CareerData;
   targetSkills?: string[];
+  photoUrl?: string; // For Germany template
 }
 
 export interface PDFGenerationResult {
@@ -19,12 +22,17 @@ export interface PDFGenerationResult {
 export async function generateResumePDF(
   options: PDFGenerationOptions
 ): Promise<PDFGenerationResult> {
-  const { template, careerData, targetSkills } = options;
+  const { template, careerData, targetSkills, photoUrl } = options;
 
   // Select template component based on template ID
-  // Using JSX directly instead of createElement for proper typing
   const getDocument = () => {
     switch (template) {
+      case "eu-uk":
+        return <EUUKResume data={careerData} targetSkills={targetSkills} />;
+      case "germany":
+        return <GermanyResume data={careerData} targetSkills={targetSkills} photoUrl={photoUrl} />;
+      case "creative":
+        return <CreativeResume data={careerData} targetSkills={targetSkills} />;
       case "us-tech":
       default:
         return <USTechResume data={careerData} targetSkills={targetSkills} />;

@@ -139,3 +139,72 @@ model Document {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+// Analytics and Tracking Models
+
+model AnalyticsEvent {
+  id        String   @id @default(cuid())
+  userId    String
+
+  // Event details
+  eventType   String   // resume_generated, cover_letter_generated, job_analyzed, etc.
+  eventData   Json?    // Additional event-specific data
+
+  // Context
+  jobId       String?
+  resumeId    String?
+  templateId  String?
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([eventType])
+  @@index([createdAt])
+}
+
+model Application {
+  id        String   @id @default(cuid())
+  userId    String
+  jobId     String
+  resumeId  String?
+
+  // Application details
+  companyName   String
+  jobTitle      String
+  appliedAt     DateTime @default(now())
+
+  // Outcome tracking
+  status        String   @default("applied") // applied, screening, interview, offer, rejected, withdrawn
+  statusUpdatedAt DateTime @default(now())
+
+  // Interview tracking
+  interviewCount Int     @default(0)
+
+  // Notes
+  notes         String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([status])
+}
+
+model DailyUsage {
+  id        String   @id @default(cuid())
+  userId    String
+  date      DateTime @db.Date
+
+  // Daily counts
+  llmRewrites       Int @default(0)
+  coverLetters      Int @default(0)
+  linkedInGenerations Int @default(0)
+  pdfExports        Int @default(0)
+  docxExports       Int @default(0)
+  jobsAnalyzed      Int @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, date])
+}
