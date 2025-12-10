@@ -5,7 +5,8 @@
       "Bash(npm install:*)",
       "Bash(npx prisma init:*)",
       "Bash(npm uninstall:*)",
-      "Bash(npx prisma generate:*)"
+      "Bash(npx prisma generate:*)",
+      "Bash(npx prisma db push:*)"
     ],
     "deny": [],
     "ask": []

@@ -19,10 +19,14 @@ export async function POST(request: Request) {
     const file = formData.get("file") as File | null;
 
     if (!file) {
+      console.error("Upload error: No file provided");
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
 
+    console.log("Upload received:", { name: file.name, type: file.type, size: file.size });
+
     if (file.size > MAX_FILE_SIZE) {
+      console.error("Upload error: File too large", file.size);
       return NextResponse.json(
         { error: "File too large. Maximum size is 10MB." },
         { status: 400 }
@@ -30,6 +34,7 @@ export async function POST(request: Request) {
     }
 
     if (!isSupportedMimeType(file.type)) {
+      console.error("Upload error: Unsupported file type", file.type);
       return NextResponse.json(
         { error: "Unsupported file type. Please upload PDF, DOCX, or TXT." },
         { status: 400 }
@@ -41,14 +46,18 @@ export async function POST(request: Request) {
     const buffer = Buffer.from(arrayBuffer);
 
     // Parse document
+    console.log("Parsing document...");
     const { text, error: parseError } = await parseDocument(buffer, file.type);
 
     if (parseError) {
+      console.error("Upload error: Parse failed", parseError);
       return NextResponse.json(
         { error: `Failed to parse document: ${parseError}` },
         { status: 400 }
       );
     }
+
+    console.log("Parse successful, text length:", text.length);
 
     // Upload to Supabase Storage
     const fileExt = file.name.split(".").pop();
